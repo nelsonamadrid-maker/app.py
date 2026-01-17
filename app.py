@@ -22,23 +22,31 @@ def get_google_sheet():
     return client.open("Little Linguist Grades").sheet1
 
 def log_to_sheet(student, word, result, wallet_amt):
-    # connecting to the sheet
-    st.write("Debug: Attempting to connect to Google Sheets...") 
+    # REMOVE THE TRY/EXCEPT FOR NOW SO WE SEE ERRORS
     
+    # 1. Connect
+    st.write("Debug: Connecting...")
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["gcp_service_account"], scope)
     client = gspread.authorize(creds)
     
-    # Opening the spreadsheet
-    sheet = client.open("Little Linguist Grades").sheet1
-    st.write("Debug: Found the sheet!")
+    # 2. Open by URL (The "GPS" Method)
+    # PASTE YOUR FULL URL INSIDE THE QUOTES BELOW vvv
+    sheet_url = "https://docs.google.com/spreadsheets/d/17lJE8-ZHQfroWvSfd1KYP2rHdeZ1CEzNmspxxp4r1u8/edit?gid=0#gid=0" 
+    sheet = client.open_by_url(sheet_url).sheet1
     
-    # Writing data
+    # 3. Write
+    st.write("Debug: Writing...")
     now = datetime.datetime.now()
-    date_str = now.strftime("%Y-%m-%d")
-    time_str = now.strftime("%H:%M:%S")
-    sheet.append_row([date_str, time_str, student, word, result, wallet_amt])
-    st.write("Debug: Successfully wrote to sheet!")
+    sheet.append_row([
+        now.strftime("%Y-%m-%d"), 
+        now.strftime("%H:%M:%S"), 
+        student, 
+        word, 
+        result, 
+        wallet_amt
+    ])
+    st.write("Debug: Success!")
 
 # --- USER CONFIGURATION ---
 USERS = {
