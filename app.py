@@ -1,4 +1,3 @@
-# To run this, you would need a file named app.py
 import streamlit as st
 import random
 from gtts import gTTS
@@ -37,8 +36,8 @@ def log_to_sheet(student, word, result, wallet_amt):
 # --- USER CONFIGURATION ---
 USERS = {
     "Nelson": "admin",    
-    "Student1": "blue",   
-    "Student2": "red",    
+    "Santi": "blue",   
+    "Ceci": "red",    
 }
 
 # --- SESSION STATE ---
