@@ -1,2 +1,4 @@
 streamlit
 gTTS
+gspread
+oauth2client
